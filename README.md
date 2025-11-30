@@ -82,9 +82,9 @@
 
 * ένας κενός κατασκευαστής που καλεί τον κατασκευαστή της UnicastRemoteObject
 
-* #### GetAccountFromAuthToken:
+* #### CheckAuthToken:
 
-  Η μέθοδος GetAccountFromAuthToken δέχεται ένα ακέραιο authToken και ελέγχει υπάρχει λογαριασμός που να έχει αυτόν τον ακέραιο ως authToken. Αν υπάρχει, τότε επιστρέφει αυτόν τον λογαριασμό. Αν δεν υπάρχει τότε επιστρέφει το null.
+  Η μέθοδος CheckAuthToken δέχεται ένα ακέραιο authToken και ελέγχει υπάρχει λογαριασμός που να έχει αυτόν τον ακέραιο ως authToken. Αν υπάρχει, τότε επιστρέφει true. Αλλιώς, επιστρέφει false.
   
 * #### IsUsernameValid:
   
