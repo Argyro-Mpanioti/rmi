@@ -2,6 +2,8 @@ import java.rmi.*;
 
 public interface MessagingAppInt extends Remote {
 
+    boolean CheckAuthToken(int authToken) throws RemoteException;
+
     String CreateAccount(String username) throws RemoteException;
 
     String ShowAccounts() throws RemoteException;
@@ -9,8 +11,6 @@ public interface MessagingAppInt extends Remote {
     String SendMessage(int senderAuthToken, String recipientUsername, String messageBody) throws RemoteException;
 
     String ShowInbox(int authToken) throws RemoteException;
-
-    boolean CheckAuthToken(int authToken) throws RemoteException;
 
     String ReadMessage(int receiverAuthToken, int messageId) throws RemoteException;
 

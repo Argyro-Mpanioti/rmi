@@ -19,7 +19,6 @@ public class RemoteMessagingApp extends UnicastRemoteObject implements Messaging
             }
         }
 
-        String output;
         if(tokenExists)
         {
             return true;
@@ -74,7 +73,6 @@ public class RemoteMessagingApp extends UnicastRemoteObject implements Messaging
         }
         return output;
     }
-
 
     public String ShowAccounts() throws RemoteException
     {
@@ -147,7 +145,10 @@ public class RemoteMessagingApp extends UnicastRemoteObject implements Messaging
         {
             output=output+message.info()+"\n";
         }
-        output=output.substring(0, output.length()-1);
+        if(!output.isEmpty())
+        {
+            output=output.substring(0, output.length()-1);
+        }
 
         return output;
     }
@@ -163,6 +164,8 @@ public class RemoteMessagingApp extends UnicastRemoteObject implements Messaging
             }
         }
 
+        String output;
+
         boolean messageIdExists=false;
         Message message = null;
         for (Message mess: receiver.messageBox)
@@ -174,7 +177,6 @@ public class RemoteMessagingApp extends UnicastRemoteObject implements Messaging
             }
         }
 
-        String output;
         if(messageIdExists)
         {
             message.isRead=true;
@@ -191,6 +193,7 @@ public class RemoteMessagingApp extends UnicastRemoteObject implements Messaging
     public String DeleteMessage(int receiverAuthToken, int messageId) throws RemoteException
     {
 
+
         Account receiver = null;
         for (Account acc:MessagingServer.accounts)
         {
@@ -200,8 +203,10 @@ public class RemoteMessagingApp extends UnicastRemoteObject implements Messaging
             }
         }
 
+        String output;
         boolean messageIdExists=false;
         int index=0;
+
         for(int i=0;i<receiver.messageBox.size();i++)
         {
             if(receiver.messageBox.get(i).id==messageId)
@@ -211,7 +216,6 @@ public class RemoteMessagingApp extends UnicastRemoteObject implements Messaging
             }
         }
 
-        String output;
         if(messageIdExists)
         {
             receiver.messageBox.remove(index);
