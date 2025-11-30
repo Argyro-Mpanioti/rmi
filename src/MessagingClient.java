@@ -14,9 +14,7 @@ public class MessagingClient
             int FN_ID = Integer.parseInt(args[2]);
             String[] argsRest= Arrays.copyOfRange(args,3,args.length);
 
-            // connect to the RMI registry
             Registry rmiRegistry = LocateRegistry.getRegistry(portNumber);
-            // get reference for remote object
             MessagingAppInt stub = (MessagingAppInt) rmiRegistry.lookup("messaging");
 
             System.out.println(DoFN_ID(stub,FN_ID,argsRest));
@@ -34,11 +32,13 @@ public class MessagingClient
         String output="";
         if (FN_ID==1)
         {
-            output=stub.CreateAccount(argsRest[0]);
+            String username=argsRest[0];
+            output=stub.CreateAccount(username);
         }
         else
         {
-            if(stub.CheckAuthToken(Integer.parseInt(argsRest[0])))
+            int authToken=Integer.parseInt(argsRest[0]);
+            if(stub.CheckAuthToken(authToken))
             {
                 if(FN_ID==2)
                 {
@@ -46,19 +46,23 @@ public class MessagingClient
                 }
                 else if(FN_ID==3)
                 {
-                    output=stub.SendMessage(Integer.parseInt(argsRest[0]),argsRest[1],argsRest[2]);
+                    String recipientUsername=argsRest[1];
+                    String messageBody=argsRest[2];
+                    output=stub.SendMessage(authToken,recipientUsername,messageBody);
                 }
                 else if(FN_ID==4)
                 {
-                    output=stub.ShowInbox(Integer.parseInt(argsRest[0]));
+                    output=stub.ShowInbox(authToken);
                 }
                 else if(FN_ID==5)
                 {
-                    output=stub.ReadMessage(Integer.parseInt(argsRest[0]), Integer.parseInt(argsRest[1]));
+                    int messageId=Integer.parseInt(argsRest[1]);
+                    output=stub.ReadMessage(authToken,messageId);
                 }
                 else if(FN_ID==6)
                 {
-                    output=stub.DeleteMessage(Integer.parseInt(argsRest[0]), Integer.parseInt(argsRest[1]));
+                    int messageId=Integer.parseInt(argsRest[1]);
+                    output=stub.DeleteMessage(authToken,messageId);
                 }
             }
             else

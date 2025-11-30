@@ -1,8 +1,6 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import static sun.security.util.Debug.args;
-
 public class RemoteMessagingApp extends UnicastRemoteObject implements MessagingAppInt
 {
     public RemoteMessagingApp() throws RemoteException {
