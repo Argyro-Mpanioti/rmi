@@ -8,7 +8,7 @@ public class MessagingServer
     public static List<Account> accounts;
     public static int authTokensCounter;
     public static int messageIdsCounter;
-    public static void main(String args[])
+    public static void main(String[] args)
     {
         try
         {
