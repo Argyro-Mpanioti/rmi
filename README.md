@@ -52,5 +52,16 @@
 Όλα τα παραπάνω πεδία είναι global γιατί χρειαζόμαστε πρόσβαση σε αυτά από την κλάση RemoteMessagingApp.
 
 ### Μέθοδοι
-Η κλάση έχει μία μέθοδο main η οποία αρχικοποιεί το accounts σε μία κενή λίστα, το authTokensCounter σε 0 και το messageIdsCounter σε 0. Επίσης, ορίζει ως portNumber την 1η παράμετρο με την οποία τρέχουμε τον server. Στη συνέχεια
+
+Η κλάση έχει μία μέθοδο main η οποία αρχικοποιεί το accounts σε μία κενή λίστα, το authTokensCounter σε 0 και το messageIdsCounter σε 0. Επίσης, ορίζει ως portNumber την 1η παράμετρο με την οποία τρέχουμε τον server. Στη συνέχεια φτιάχνει το remote αντικείμενο stub και το συνδέει με το registry της θύρας portNumber.
+
+
+## Κλάση MessagingClient
+
+Η κλάση MessagingClient υλοποιεί την υπηρεσία του client.
+
+### Μέθοδοι
+
+Η κλάση έχει μία μέθοδο main η οποία αρχικοποιεί το accounts σε μία κενή λίστα, το authTokensCounter σε 0 και το messageIdsCounter σε 0. Επίσης, ορίζει ως portNumber την 1η παράμετρο με την οποία τρέχουμε τον server. Στη συνέχεια φτιάχνει το remote αντικείμενο stub και το συνδέει με το registry της θύρας portNumber.
+
 
