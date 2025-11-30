@@ -1,6 +1,8 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import static sun.security.util.Debug.args;
+
 public class RemoteMessagingApp extends UnicastRemoteObject implements MessagingAppInt
 {
     public RemoteMessagingApp() throws RemoteException {
@@ -28,8 +30,8 @@ public class RemoteMessagingApp extends UnicastRemoteObject implements Messaging
             if (accountExists) {
                 output = "Sorry, the user already exists";
             } else {
-                MessagingServer.authToken++;
-                Account account = new Account(username, MessagingServer.authToken);
+                MessagingServer.authTokensCounter++;
+                Account account = new Account(username, MessagingServer.authTokensCounter);
                 MessagingServer.accounts.add(account);
                 output = String.valueOf(account.authToken);
             }
@@ -61,11 +63,8 @@ public class RemoteMessagingApp extends UnicastRemoteObject implements Messaging
         return output;
     }
 
-    public String SendMessage(String[] args) throws RemoteException
+    public String SendMessage(int senderAuthToken, String recipientUsername, String messageBody) throws RemoteException
     {
-
-        String recipientUsername=args[1];
-
         boolean recipientFound=false;
         Account recipient=null;
         for(Account acc:MessagingServer.accounts)
@@ -83,15 +82,15 @@ public class RemoteMessagingApp extends UnicastRemoteObject implements Messaging
             String senderUsername = null;
             for(Account acc:MessagingServer.accounts)
             {
-                if(acc.authToken==Integer.parseInt(args[0]))
+                if(acc.authToken==senderAuthToken)
                 {
                     senderUsername=acc.username;
                 }
             }
 
 
-            MessagingServer.messageToken++;
-            Message message=new Message(senderUsername, recipientUsername, args[2], MessagingServer.messageToken);
+            MessagingServer.messageIdsCounter++;
+            Message message=new Message(senderUsername, recipientUsername, messageBody, MessagingServer.messageIdsCounter);
             recipient.messageBox.add(message);
             output="OK";
         }
@@ -146,12 +145,12 @@ public class RemoteMessagingApp extends UnicastRemoteObject implements Messaging
         }
     }
 
-    public String ReadMessage(String args[]) throws RemoteException
+    public String ReadMessage(int receiverAuthToken, int messageId) throws RemoteException
     {
         Account receiver = null;
         for (Account acc:MessagingServer.accounts)
         {
-            if(acc.authToken==Integer.parseInt(args[0]))
+            if(acc.authToken==receiverAuthToken)
             {
                 receiver=acc;
             }
@@ -161,7 +160,7 @@ public class RemoteMessagingApp extends UnicastRemoteObject implements Messaging
         Message message = null;
         for (Message mess: receiver.messageBox)
         {
-            if(mess.id==Integer.parseInt(args[1]))
+            if(mess.id==messageId)
             {
                 messageIdExists=true;
                 message=mess;
@@ -182,13 +181,13 @@ public class RemoteMessagingApp extends UnicastRemoteObject implements Messaging
         return output;
     }
 
-    public String DeleteMessage(String args[]) throws RemoteException
+    public String DeleteMessage(int receiverAuthToken, int messageId) throws RemoteException
     {
 
         Account receiver = null;
         for (Account acc:MessagingServer.accounts)
         {
-            if(acc.authToken==Integer.parseInt(args[0]))
+            if(acc.authToken==receiverAuthToken)
             {
                 receiver=acc;
             }
@@ -198,7 +197,7 @@ public class RemoteMessagingApp extends UnicastRemoteObject implements Messaging
         int index=0;
         for(int i=0;i<receiver.messageBox.size();i++)
         {
-            if(receiver.messageBox.get(i).id==Integer.parseInt(args[1]))
+            if(receiver.messageBox.get(i).id==messageId)
             {
                 messageIdExists=true;
                 index=i;

@@ -46,7 +46,7 @@ public class MessagingClient
                 }
                 else if(FN_ID==3)
                 {
-                    output=stub.SendMessage(argsRest);
+                    output=stub.SendMessage(Integer.parseInt(argsRest[0]),argsRest[1],argsRest[2]);
                 }
                 else if(FN_ID==4)
                 {
@@ -54,11 +54,11 @@ public class MessagingClient
                 }
                 else if(FN_ID==5)
                 {
-                    output=stub.ReadMessage(argsRest);
+                    output=stub.ReadMessage(Integer.parseInt(argsRest[0]), Integer.parseInt(argsRest[1]));
                 }
                 else if(FN_ID==6)
                 {
-                    output=stub.DeleteMessage(argsRest);
+                    output=stub.DeleteMessage(Integer.parseInt(argsRest[0]), Integer.parseInt(argsRest[1]));
                 }
             }
             else
@@ -69,4 +69,5 @@ public class MessagingClient
 
         return output;
     }
+
 }
