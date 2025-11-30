@@ -76,3 +76,29 @@
 
 Η κλάση RemoteMessagingApp υλοποιεί τις μεθόδους του interface MessagingAppInt.
 
+### Μέθοδοι
+
+Οι μέθοδοι που υπάρχουν είναι:
+* ένας κενός κατασκευαστής που καλεί τον κατασκευαστή της UnicastRemoteObject
+* IsUsernameValid: Δέχεται ως παράμετρο ένα username και επιστρέφει true αν και μόνο αν το username περιέχει μόνο αλφαριθμητικά και τον ειδικό χαρακτήρα "\_". Αυτό ελέγχεται με τον εξής τρόπο: γίνεται αντικατάσταση των αλφαριθμητικών και των χαρακτήρων "\_" με το κενό και ελέγχεται αν το username είναι κενό. 
+* CreateAccount: Η μέθοδος CreateAcccount δέχεται ένα String username και προσπαθεί να δημιουργήσει έναν λογαριασμό με αυτό το username και επιστρέφει ένα String output. Αν το username περιέχει χαρακτήρες που δεν είναι αλφαριθμητικα ή ο ειδικός χαρακτήρας "/_" τότε δεν δημιουργείται λογαριασμός και επιστρέφεται το output "Invalid Username". Αν όχι, τότε ελέγχεται αν υπάρχει ήδη λογαριασμός στην global λίστα με τους λογαριασμούς accounts του MessagingServer. Αν υπάρχει λογαριασμός με αυτό το username τότε επιστρέφεται το output "Sorry, the user already exists". Αλλιώς αυξάνεται ο global μετρητής των λογαριασμών authTokensCounter του MessagingServer κατά 1, δημιουργείται νέος λογαριασμός με το username ως username και το authTokensCounter ως authToken, ο νέος λογαριασμός προστίθεται στην global λίστα με τους λογαριασμούς accounts του MessagingServer και επιστρέφεται το authToken ως String στο output.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
